@@ -10,7 +10,9 @@ public interface UserService {
 
     UserDto getUserById(Long id);
 
-    UserDto addUser(UserDto userDto);
+    UserDto getUserByUserName(String username);
+
+    boolean addUser(UserDto userDto);
 
     UserDto updateUser(Long id, UserDto userDto);
 

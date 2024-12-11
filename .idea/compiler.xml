@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="user-management-interfaces" />
         <module name="user-management-main" />
+        <module name="user-management-security" />
       </profile>
     </annotationProcessing>
   </component>

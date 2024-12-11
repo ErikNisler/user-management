@@ -32,9 +32,9 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addUser(@Valid @RequestBody UserDto userDto) {
-        userService.addUser(userDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto) {
+        boolean isAdded = userService.addUser(userDto);
+        return isAdded ? new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")

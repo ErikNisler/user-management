@@ -5,5 +5,7 @@
     <file url="file://$PROJECT_DIR$/user-management-interfaces/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-management-main/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-management-main/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-management-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-management-security/src/main/resources" charset="UTF-8" />
   </component>
 </project>

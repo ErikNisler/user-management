@@ -32,11 +32,17 @@ public class UserServiceImpl implements UserService {
         return userEntity.map(userMapper::toDto).orElse(null);
     }
 
+    @Override
+    public UserDto getUserByUserName(String username) {
+        Optional<UserEntity> userEntity = userRepository.findByUserName(username);
+        return userEntity.map(userMapper::toDto).orElse(null);
+    }
+
     @Transactional
     @Override
-    public UserDto addUser(UserDto userDto) {
+    public boolean addUser(UserDto userDto) {
         UserEntity savedUser = userRepository.save(userMapper.toEntity(userDto));
-        return userMapper.toDto(savedUser);
+        return true;
     }
 
     @Transactional
