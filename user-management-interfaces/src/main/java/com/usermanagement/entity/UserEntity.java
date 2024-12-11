@@ -1,9 +1,11 @@
 package com.usermanagement.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "users")
+@Data
 public class UserEntity {
 
     @Id
@@ -14,19 +16,10 @@ public class UserEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "username")
+    private String username;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "password")
+    private String password;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

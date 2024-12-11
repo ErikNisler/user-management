@@ -12,8 +12,9 @@ public class UserMapper {
             return null;
         }
         UserDto userDto = new UserDto();
-        userDto.setId(userEntity.getId());
         userDto.setName(userEntity.getName());
+        userDto.setUsername(userEntity.getUsername());
+        userDto.setPassword(userEntity.getPassword());
         return userDto;
     }
 
@@ -22,8 +23,9 @@ public class UserMapper {
             return null;
         }
         UserEntity userEntity = new UserEntity();
-        userEntity.setId(userDto.getId());
         userEntity.setName(userDto.getName());
+        userEntity.setUsername(userDto.getUsername());
+        userEntity.setPassword(userDto.getPassword());
         return userEntity;
     }
 }

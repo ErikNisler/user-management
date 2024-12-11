@@ -7,13 +7,11 @@ import com.usermanagement.service.UserService;
 import com.usermanagement.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,27 +28,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Long id) {
-        return userMapper.toDto(userRepository.getUserById(id));
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        return userEntity.map(userMapper::toDto).orElse(null);
     }
 
     @Transactional
     @Override
-    public void addUser(UserDto userDto) {
-        addUser(userMapper.toEntity(userDto));
-    }
-
-    private void addUser(UserEntity userEntity) {
-        userRepository.addUser(userEntity.getId(), userEntity.getName());
+    public UserDto addUser(UserDto userDto) {
+        UserEntity savedUser = userRepository.save(userMapper.toEntity(userDto));
+        return userMapper.toDto(savedUser);
     }
 
     @Transactional
     @Override
-    public void updateUser(Long id, String name) {
-        userRepository.updateUser(id, name);
+    public UserDto updateUser(Long id, UserDto userDto) {
+        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
+        if (userEntityOptional.isPresent()) {
+            UserEntity updatedUser = userRepository.save(userMapper.toEntity(userDto));
+            return userMapper.toDto(updatedUser);
+        }
+        return null;
     }
 
     @Override
     public boolean deleteUser(Long id) {
+        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
+        if (userEntityOptional.isPresent()) {
+            userRepository.delete(userEntityOptional.get());
+            return true;
+        }
         return false;
     }
 }
