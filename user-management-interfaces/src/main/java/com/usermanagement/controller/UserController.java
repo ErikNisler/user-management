@@ -25,28 +25,38 @@ public class UserController {
     @GetMapping("/get")
     public ResponseEntity<UserDto> getUserById(@RequestParam(name="id", required = true) Long id) {
         UserDto userDto = userService.getUserById(id);
-        if (userDto == null) {
-            return ResponseEntity.notFound().build();
+        if (userDto != null) {
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
         }
-        return ResponseEntity.ok().body(userDto);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/add")
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto) {
         boolean isAdded = userService.addUser(userDto);
-        return isAdded ? new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (isAdded) {
+            return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDto userDto) {
         UserDto updatedUser = userService.updateUser(id, userDto);
-        return updatedUser != null ? new ResponseEntity<>(updatedUser, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (updatedUser != null) {
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id) {
-        boolean isDeleted = userService.deleteUser(id);
-        return isDeleted ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id,
+                                           @RequestHeader(value = "Authorization") String authorizationHeader) {
+        boolean isDeleted = userService.deleteUser(id, authorizationHeader);
+        if (isDeleted) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }

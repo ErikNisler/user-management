@@ -21,7 +21,6 @@ public class App {
     private String name;
     private String username;
     private String password;
-    private UserDto user;
 
     public App(UserFacade userFacade, Login login) {
         this.userFacade = userFacade;
@@ -42,10 +41,11 @@ public class App {
 
             while (!isCommandSet) {
                 try {
-                    System.out.print("Choose your option: ");
+                    System.out.println("Choose your option: ");
                     scanner = new Scanner(System.in);
                     command = scanner.nextInt();
                     isCommandSet = true;
+                    scanner.nextLine();
                 } catch(InputMismatchException ime){
                     System.out.println("Not a number!");
                 }
@@ -53,43 +53,35 @@ public class App {
 
             switch (command) {
                 case 1:
-                    System.out.print("User name: ");
-                    username = scanner.next();
-                    System.out.print("Password: ");
-                    password = scanner.next();
+                    System.out.println("User name: ");
+                    username = scanner.nextLine();
+                    System.out.println("Password: ");
+                    password = scanner.nextLine();
 
-                    user = new UserDto();
-                    user.setUsername(username);
-                    user.setPassword(password);
-
-                    boolean logged = userFacade.login(user);
-                    if (logged) {
-                        login.start(user);
+                    UserDto foundUser = userFacade.login(username, password);
+                    if (foundUser != null) {
+                        login.start(foundUser);
                     }
                     break;
                 case 2:
-                    System.out.print("Full Name: ");
-                    name = scanner.next();
-                    System.out.print("User name: ");
-                    username = scanner.next();
-                    System.out.print("Password: ");
-                    password = scanner.next();
+                    System.out.println("Full Name:");
+                    name = scanner.nextLine();
+                    System.out.println("User name:");
+                    username = scanner.nextLine();
+                    System.out.println("Password:");
+                    password = scanner.nextLine();
 
-                    user = new UserDto();
-                    user.setName(name);
-                    user.setUsername(username);
-                    user.setPassword(password);
-
-                    boolean registered = userFacade.register(user);
+                    boolean registered = userFacade.register(name, username, password);
                     if (registered) {
-                        System.out.println(String.format("User %s has been successfully created!", user.getName()));
-                    } else {
-                        System.out.println(String.format("Error when creating user %s !", user.getName()));
+                        System.out.println(String.format("User %s has been successfully created", name));
                     }
                     break;
                 case 3:
                     isEndWordEntered = true;
                     System.out.println("The end, thank you!");
+                    break;
+                default:
+                    System.out.println("Unknown option! Try again");
             }
         }
     }

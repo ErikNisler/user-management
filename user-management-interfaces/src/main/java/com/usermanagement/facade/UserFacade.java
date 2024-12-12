@@ -1,30 +1,14 @@
 package com.usermanagement.facade;
 
 import com.usermanagement.dto.UserDto;
-import com.usermanagement.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
-import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
-public class UserFacade {
+public interface UserFacade {
 
-    private final UserService userService;
+    UserDto login(String username, String password);
 
-    public boolean login(UserDto userDto) {
-        UserDto foundUser = userService.getUserByUserName(userDto.getUsername());
-        if (foundUser == null) {
-            return false;
-        }
-        return foundUser.getPassword().equals(userDto.getPassword());
-    }
+    boolean register(String name, String username, String password);
 
-    public boolean register(UserDto userDto) {
-        return userService.addUser(userDto);
-    }
+    boolean delete(String username, String password, String usernameToBeDeleted);
 
-    public boolean delete(UserDto userDto) {
-        return userService.addUser(userDto);
-    }
+    boolean changePassword(String username, String passwordToChange);
 }

@@ -2,17 +2,23 @@ package com.usermanagement.ui;
 
 import com.usermanagement.dto.UserDto;
 import com.usermanagement.facade.UserFacade;
+import io.micrometer.common.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@Slf4j
 @Component
 public class Login {
 
     private boolean isEndWordEntered;
 
     private final UserFacade userFacade;
+
+    private String username;
+    private String password;
 
     public Login(UserFacade userFacade) {
         this.userFacade = userFacade;
@@ -37,37 +43,44 @@ public class Login {
                     command = scanner.nextInt();
                     isCommandSet = true;
                 } catch (InputMismatchException ime) {
-                    System.out.println("Not a number!");
+                    log.error("Not a number!");
                 }
             }
 
             switch (command) {
                 case 1:
-//                    System.out.print("User name: ");
-//                    username = scanner.next();
-//                    System.out.print("Password: ");
-//                    password = scanner.next();
-//
-//                    user = new UserDto();
-//                    user.setUsername(username);
-//                    user.setPassword(password);
-//
-//                    boolean logged = userFacade.login(user);
-//                    if (logged) {
-//                        login.start(user);
-//                    }
-//                    break;
-                case 2:
-                    boolean deleted = userFacade.register(user);
-                    if (registered) {
-                        System.out.println(String.format("User %s has been successfully created!", user.getName()));
+                    System.out.print("Write a new password: ");
+                    password = scanner.nextLine();
+                    if (StringUtils.isBlank(password)) {
+                        System.out.print("Aborting password change");
+                        break;
+                    }
+                    boolean updated = userFacade.changePassword(userDto.getUsername(), password);
+                    if (updated) {
+                        System.out.println(String.format("Password for user %s has been successfully updated", userDto.getUsername()));
                     } else {
-                        System.out.println(String.format("Error when creating user %s !", user.getName()));
+                        System.out.println("Password was not updated.");
+                    }
+                    break;
+                case 2:
+                    System.out.print("Write a user name to be deleted: ");
+                    username = scanner.nextLine();
+                    System.out.print("Execute with password: ");
+                    password = scanner.nextLine();
+
+                    boolean deleted = userFacade.delete(userDto.getUsername(), password, username);
+                    if (deleted) {
+                        System.out.println(String.format("User with username %s deleted successfully", username));
+                    } else {
+                        System.out.println("User was not deleted.");
                     }
                     break;
                 case 3:
                     isEndWordEntered = true;
                     System.out.println(String.format("User %s logged out.", userDto.getName()));
+                    break;
+                default:
+                    System.out.println("Unknown option! Try again");
             }
         }
     }

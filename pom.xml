@@ -23,7 +23,8 @@
         <postgresql.version>42.6.0</postgresql.version>
         <lombok.version>1.18.30</lombok.version>
         <javax-validation.version>2.0.1.Final</javax-validation.version>
-        <spring.security.version>3.4.0</spring.security.version>
+        <spring.security.starter.version>3.4.0</spring.security.starter.version>
+        <spring.security.core.version>6.4.1</spring.security.core.version>
     </properties>
 
     <dependencies>
@@ -61,13 +62,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>${spring.security.version}</version>
+            <version>${spring.security.starter.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.core.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Example Plugin: Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -16,5 +16,9 @@ public interface UserService {
 
     UserDto updateUser(Long id, UserDto userDto);
 
-    boolean deleteUser(Long id);
+    boolean deleteUser(Long id, String credentials);
+
+    boolean deleteUser(String username, String password, String usernameToBeDeleted);
+
+    int updatePassword(String username, String passwordToBeChanged);
 }
