@@ -5,8 +5,7 @@ Easy command line like user management application for Moro-systems as a homewor
 This Spring boot application is running on Java 21 extended with CommandLineRunner
 simulating real login app.
 
-Unfortunately, database for now is running only on my localhost, in near future
-database on cloud will be implemented.
+PostgreSQL db is running on AWS cloud.
 
 **Key phases**
 
@@ -27,8 +26,8 @@ Added username and password into DB.
 
 User can modify its own password - update query in UserRepository.
 
-***Spring security - critical point from my side - lack of knowledge in this part of
-homework - only partly implemented***
+***Spring security - critical point from my side
+Lack of knowledge in this part of  homework - implemented only basics***
 
 **Phase 4 - Possible update**
 

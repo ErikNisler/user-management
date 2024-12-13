@@ -23,6 +23,11 @@
             <artifactId>user-management-interfaces</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.usermanagement</groupId>
+            <artifactId>user-management-security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
