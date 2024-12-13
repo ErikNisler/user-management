@@ -3,6 +3,6 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/user_management
+    url: jdbc:postgresql://database-1.cf4q44ka2t0c.eu-north-1.rds.amazonaws.com:5432/
     username: postgres
-    password: admin
+    password: 774Erik357
