@@ -12,8 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
-    @Query("SELECT u FROM UserEntity u WHERE u.username=:username")
-    Optional<UserEntity> findByUserName(@Param("username") String username);
+    Optional<UserEntity> findByUsername(String userName);
 
     @Modifying
     @Query("UPDATE UserEntity u SET u.password=:password WHERE u.username=:username")

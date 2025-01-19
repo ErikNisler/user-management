@@ -1,7 +1,5 @@
 package com.usermanagement;
 
-import com.usermanagement.ui.App;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -12,21 +10,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.usermanagement")
 @EnableJpaRepositories("com.usermanagement")
 @ComponentScan(basePackages = "com.usermanagement")
-public class SpringBootApp implements CommandLineRunner {
-
-    private final App app;
-
-    public SpringBootApp(App app) {
-        this.app = app;
-    }
+public class SpringBootApp {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootApp.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        app.start();
-        System.exit(0);
-    }
 }

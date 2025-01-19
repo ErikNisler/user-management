@@ -3,6 +3,15 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://database-1.cf4q44ka2t0c.eu-north-1.rds.amazonaws.com:5432/
+    url: jdbc:postgresql://localhost:5432/users
     username: postgres
-    password: 774Erik357
+    password: eriknisler
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
